@@ -1,0 +1,18 @@
+### Linux
+*~
+
+### OSX
+*.DS_Store
+
+### JetBrains
+.idea/
+
+### Node
+node_modules/
+!node_modules/thrift
+
+# auto-generated
+tags
+logs/*
+
+### composer
