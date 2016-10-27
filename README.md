@@ -1,5 +1,61 @@
 # The PHP RPC Framework
 
+### How to run
+
+```bash
+cd path/to/phprpc
+```
+
+```bash
+# start server
+php servers/book.server.php
+
+# output will be like this:
+
+Book Service Server Started @ 2016-10-27 20:07:29
+int(6)
+bool(false)
+string(4) "test"
+object(DB\Redis)#25 (7) {
+  ["_HOST":"DB\Redis":private]=>
+  string(12) "192.168.1.12"
+  ["_PORT":"DB\Redis":private]=>
+  string(4) "6379"
+  ["_AUTH":"DB\Redis":private]=>
+  string(9) "mojichina"
+  ["_TIMEOUT":"DB\Redis":private]=>
+  int(0)
+  ["_CTYPE":"DB\Redis":private]=>
+  int(1)
+  ["_TRANSCATION":"DB\Redis":private]=>
+  NULL
+  ["_REDIS"]=>
+  object(Redis)#26 (1) {
+    ["socket"]=>
+    resource(61) of type (Redis Socket Buffer)
+  }
+}
+bool(true)
+
+```
+
+```bash
+# open a client
+php clients/book.client.php
+
+# server responses like this:
+object(Book\BookInfo)#12 (3) {
+  ["name"]=>
+  string(24) "钢铁是怎样炼成的"
+  ["price"]=>
+  int(0)
+  ["author"]=>
+  string(30) "前苏联奥斯特洛夫斯基"
+}
+```
+
+
+
 ### Zookeeper 实现服务注册与发现
 
 **注册**：
