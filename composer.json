@@ -5,7 +5,7 @@
     "prefer-stable" : true,
     "require": {
         "kaiyulee/thrift-lib-php": "dev-master",
-        "kaiyulee/swoole-thrift-lib": "dev-master",
+        "kaiyulee/swoole-thrift-lib": "dev-master"
     },
     "autoload": {
         "files": ["defines.php"]
