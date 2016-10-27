@@ -1,11 +1,12 @@
 {
     "name": "kaiyulee/phprpc",
     "description": "A PHP RPC framework based on swoole & thrift",
-    "minimum-stability": "dev",
+    "minimum-stability": "stable",
     "prefer-stable" : true,
+    "type": "project",
     "require": {
-        "kaiyulee/thrift-lib-php": "dev-master",
-        "kaiyulee/swoole-thrift-lib": "dev-master"
+        "kaiyulee/thrift-lib-php": "1.1.0",
+        "kaiyulee/swoole-thrift-lib": "1.1.0"
     },
     "autoload": {
         "files": ["defines.php"]
