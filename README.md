@@ -22,7 +22,7 @@ object(DB\Redis)#25 (7) {
   ["_PORT":"DB\Redis":private]=>
   string(4) "6379"
   ["_AUTH":"DB\Redis":private]=>
-  string(9) "mojichina"
+  string(5) "abcde"
   ["_TIMEOUT":"DB\Redis":private]=>
   int(0)
   ["_CTYPE":"DB\Redis":private]=>
@@ -35,7 +35,7 @@ object(DB\Redis)#25 (7) {
     resource(61) of type (Redis Socket Buffer)
   }
 }
-bool(true)
+bool(false)
 
 ```
 
