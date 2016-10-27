@@ -4,7 +4,6 @@
     "minimum-stability": "dev",
     "prefer-stable" : true,
     "require": {
-        "php/rpc-framework": "dev-master",
         "kaiyulee/thrift-lib-php": "dev-master",
         "kaiyulee/swoole-thrift-lib": "dev-master",
     },
