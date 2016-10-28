@@ -13,14 +13,14 @@ return [
     'db1' => [
         'host' => '127.0.0.1',
         'port' => '3306',
-        'db' => 'sds',
+        'db' => 'moji',
         'username' => 'root',
         'password' => '123456',
     ],
     'db2' => [
         'host' => '192.168.1.7',
         'port' => '3306',
-        'db' => 'sdssr',
+        'db' => 'moji',
         'username' => 'root',
         'password' => '',
     ],
@@ -28,7 +28,7 @@ return [
     'redis' => [
         'host' => '192.168.1.12',
         'port' => '6379',
-        'password' => 'abcde',
+        'password' => 'mojichina',
     ],
 
     'zookeeper' => [

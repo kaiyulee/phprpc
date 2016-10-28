@@ -24,12 +24,15 @@ $loader->register();
 
 try {
     // 发现服务, 各客户端自己实现
-    $zk = new ZK('127.0.0.1:32772'); // zk 服务配置可根据客户端的具体环境配置
+    //
+    // zk 服务配置可根据客户端的具体环境配置
+    $zk = new ZK('127.0.0.1:32772');
+
     $zk_service_node = '/service/book';
 
-    $discovery = new ServiceDiscovery($zk);
+    ServiceDiscovery::setServer($zk);
 
-    $service = $discovery->discover($zk_service_node);
+    $service = ServiceDiscovery::discover($zk_service_node);
 
     if (empty($service)) {
         die('no service available for this client!');

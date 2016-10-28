@@ -12,6 +12,7 @@ use Thrift\ClassLoader\ThriftClassLoader;
 use Thrift\Server\TServerSocket;
 use Thrift\Exception\TException;
 use Helper\Fn;
+use Container\Container;
 use ZK\ZK;
 use ZK\Service;
 use ZK\ServiceRegistry;
@@ -31,6 +32,7 @@ if (php_sapi_name() == 'cli') {
 }
 
 try {
+
     // zookeeper 服务器配置
     $zk_host = Fn::C('zookeeper.host');
     $zk_port = Fn::C('zookeeper.port');
@@ -40,7 +42,7 @@ try {
     $service_port = Fn::C('service.port');
 
     $zk = new ZK($zk_host . ':' . $zk_port);
-    $registry = new ServiceRegistry($zk);
+    Container::set('zk', $zk);
 
     /**
      * 启动时，自注册服务
@@ -52,7 +54,9 @@ try {
     $service = new Service($node_path, $node_value);
 
     // 注册到 zk
-    $registry->register($node_path, $service);
+    ServiceRegistry::withSharedServer('zk');
+    // 如果需要指定新的 zookeeper server， 使用 setServer 方法
+    ServiceRegistry::register($node_path, $service);
 
     $handler_class = SERVICE . '\\' . 'Handler';
     $processor_class = SERVICE . '\\' . SERVICE . 'Processor';

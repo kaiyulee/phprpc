@@ -1,60 +1,24 @@
-# The PHP RPC Framework
+# The PHP RPC Micro Service Framework
 
-### How to run
+### Install
 
 ```bash
-cd path/to/phprpc
+git clone https://github.com/kaiyulee/phprpc.git
 ```
 
+```
+commposer install
+```
+
+### Run
+
 ```bash
+cd /path/to/rpc-service
 # start server
 php servers/book.server.php
-
-# output will be like this:
-
-Book Service Server Started @ 2016-10-27 20:07:29
-int(6)
-bool(false)
-string(4) "test"
-object(DB\Redis)#25 (7) {
-  ["_HOST":"DB\Redis":private]=>
-  string(12) "192.168.1.12"
-  ["_PORT":"DB\Redis":private]=>
-  string(4) "6379"
-  ["_AUTH":"DB\Redis":private]=>
-  string(5) "abcde"
-  ["_TIMEOUT":"DB\Redis":private]=>
-  int(0)
-  ["_CTYPE":"DB\Redis":private]=>
-  int(1)
-  ["_TRANSCATION":"DB\Redis":private]=>
-  NULL
-  ["_REDIS"]=>
-  object(Redis)#26 (1) {
-    ["socket"]=>
-    resource(61) of type (Redis Socket Buffer)
-  }
-}
-bool(false)
-
-```
-
-```bash
 # open a client
 php clients/book.client.php
-
-# server responses like this:
-object(Book\BookInfo)#12 (3) {
-  ["name"]=>
-  string(24) "钢铁是怎样炼成的"
-  ["price"]=>
-  int(0)
-  ["author"]=>
-  string(30) "前苏联奥斯特洛夫斯基"
-}
 ```
-
-
 
 ### Zookeeper 实现服务注册与发现
 
@@ -95,7 +59,6 @@ if (php_sapi_name() == 'cli') {
 }
 
 try {
-    // zookeeper 服务器配置
     $zk_host = Fn::C('zookeeper.host');
     $zk_port = Fn::C('zookeeper.port');
 
@@ -104,7 +67,7 @@ try {
     $service_port = Fn::C('service.port');
 
     $zk = new ZK($zk_host . ':' . $zk_port);
-    $registry = new ServiceRegistry($zk);
+    Container::set('zk', $zk);
 
     /**
      * 启动时，自注册服务
@@ -116,7 +79,9 @@ try {
     $service = new Service($node_path, $node_value);
 
     // 注册到 zk
-    $registry->register($node_path, $service);
+    ServiceRegistry::withSharedServer('zk');
+    // 如果需要指定新的 zookeeper server， 使用 setServer 方法
+    ServiceRegistry::register($node_path, $service);
 	
 	...
 	
@@ -155,12 +120,15 @@ $loader->register();
 
 try {
     // 发现服务, 各客户端自己实现
-    $zk = new ZK('127.0.0.1:32772'); // zk 服务配置可根据客户端的具体环境配置
+    //
+    // zk 服务配置可根据客户端的具体环境配置
+    $zk = new ZK('127.0.0.1:32772');
+
     $zk_service_node = '/service/book';
 
-    $discovery = new ServiceDiscovery($zk);
+    ServiceDiscovery::setServer($zk);
 
-    $service = $discovery->discover($zk_service_node);
+    $service = ServiceDiscovery::discover($zk_service_node);
 
     if (empty($service)) {
         die('no service available for this client!');
@@ -177,7 +145,5 @@ try {
 } catch (TException $tx) {
     print 'TException: '.$tx->getMessage()."\n";
 }
-
 ```
 
-#### To be done ...
